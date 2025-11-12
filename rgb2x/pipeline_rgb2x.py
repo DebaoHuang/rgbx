@@ -106,7 +106,7 @@ class VaeImageProcrssorAOV(VaeImageProcessor):
             return image
 
         if output_type == "pil":
-            return self.numpy_to_pil(image)
+            return self.numpy_to_pil(image), image
 
     def preprocess_normal(
         self,
@@ -800,20 +800,20 @@ class StableDiffusionAOVMatEstPipeline(
             do_denormalize = [True] * aov.shape[0]
             aov_name = required_aovs[0]
             if aov_name == "albedo" or aov_name == "irradiance":
-                do_gamma_correction = True
+                do_gamma_correction = False
             else:
                 do_gamma_correction = False
 
             if aov_name == "roughness" or aov_name == "metallic":
                 aov = aov[:, 0:1].repeat(1, 3, 1, 1)
 
-            aov = self.image_processor.postprocess(
+            aov, aov_ori = self.image_processor.postprocess(
                 aov,
                 output_type=output_type,
                 do_denormalize=do_denormalize,
                 do_gamma_correction=do_gamma_correction,
             )
-            aovs = [aov]
+            aovs = [aov, aov_ori]
 
         # Offload last model to CPU
         if hasattr(self, "final_offload_hook") and self.final_offload_hook is not None:

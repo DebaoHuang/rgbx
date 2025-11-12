@@ -40,6 +40,7 @@ def get_rgb2x_demo():
             photo.name.endswith(".png")
             or photo.name.endswith(".jpg")
             or photo.name.endswith(".jpeg")
+            or photo.name.endswith(".JPG")
         ):
             photo = load_ldr_image(photo.name, from_srgb=True).to("cuda")
 

@@ -3,3 +3,5 @@ __pycache__/
 rgb2x/model_cache
 x2rgb/model_cache
 x2rgb_inpainting/model_cache
+aerial_ortho_250_8000_1/
+model_cache/

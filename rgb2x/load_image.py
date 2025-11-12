@@ -85,7 +85,7 @@ def load_ldr_image(image_path, from_srgb=False, clamp=False, normalize=False):
     image[~torch.isfinite(image)] = 0
     if from_srgb:
         # Convert from sRGB to linear RGB
-        image = image**2.2
+        image = image #**2.2
     if clamp:
         image = torch.clamp(image, min=0.0, max=1.0)
     if normalize:
